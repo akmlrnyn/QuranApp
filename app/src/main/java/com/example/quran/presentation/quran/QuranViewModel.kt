@@ -13,11 +13,11 @@ import retrofit2.Response
 import kotlin.math.log
 
 class QuranViewModel : ViewModel() {
-    private var _listSurah = MutableLiveData<SurahResponse>()
+    private var _listSurah = MutableLiveData<SurahResponse?>()
     val listSurah get() = _listSurah as LiveData<SurahResponse>
 
     private var _listAyahs = MutableLiveData<AyahResponse>()
-    val listAyahs get() = _listAyahs as LiveData<SurahResponse>
+    val listAyahs get() = _listAyahs as LiveData<AyahResponse>
 
     fun getListSurah() {
         ApiConfig.quranApiConfig.getListSurah().enqueue(object: Callback<SurahResponse> {
@@ -48,7 +48,7 @@ class QuranViewModel : ViewModel() {
                 )
             }
 
-            override fun onFailure(call: Call<SurahResponse>, t: Throwable) {
+            override fun onFailure(call: Call<AyahResponse>, t: Throwable) {
                 Log.e("QuranViewModel", "onFailure: " + t.localizedMessage)
             }
         })

@@ -1,7 +1,9 @@
 package com.example.quran.network
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 data class SurahResponse(
@@ -16,6 +18,7 @@ data class SurahResponse(
 	val status: String? = null
 )
 
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class SurahItem(
 
@@ -36,4 +39,4 @@ data class SurahItem(
 
 	@Json(name="englishNameTranslation")
 	val englishNameTranslation: String? = null
-)
+) : Parcelable

@@ -1,10 +1,12 @@
 package com.example.quran.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quran.databinding.ItemSurahBinding
 import com.example.quran.network.SurahItem
+import com.example.quran.presentation.quran.DetailSurahActivity
 
 class QuranAdapter : RecyclerView.Adapter<QuranAdapter.MyViewHolder>() {
     private val listSurah = ArrayList<SurahItem>()
@@ -31,6 +33,12 @@ class QuranAdapter : RecyclerView.Adapter<QuranAdapter.MyViewHolder>() {
             val numberOfAyah = data.numberOfAyahs
             val resultOfAyah = "$revelation - $numberOfAyah Ayahs"
             tvAyah.text = resultOfAyah
+
+            this.root.setOnClickListener {
+                val intent = Intent(it.context, DetailSurahActivity::class.java)
+                intent.putExtra(DetailSurahActivity.EXTRA_DATA, data)
+                it.context.startActivity(intent)
+            }
         }
     }
 
