@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".presentation.quran.QuranFragment">
 
+   <ProgressBar
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:id="@+id/progress_bar" />
+
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/rv_quran"
        android:layout_width="match_parent"

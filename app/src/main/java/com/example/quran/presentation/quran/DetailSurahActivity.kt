@@ -2,20 +2,24 @@ package com.example.quran.presentation.quran
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.os.Build.VERSION.SDK_INT
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quran.R
 import com.example.quran.adapter.SurahAdapter
+import com.example.quran.data.Resource
 import com.example.quran.databinding.ActivityDetailSurahBinding
 import com.example.quran.databinding.CustomViewAlertdialogBinding
-import com.example.quran.network.AyahResponse
-import com.example.quran.network.AyahsItem
-import com.example.quran.network.SurahItem
+import com.example.quran.domain.model.Ayah
+import com.example.quran.network.quran.AyahsItem
+import com.example.quran.network.quran.SurahItem
+import com.example.quran.presentation.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 class DetailSurahActivity : AppCompatActivity() {
     private var _binding: ActivityDetailSurahBinding? = null
@@ -26,6 +30,7 @@ class DetailSurahActivity : AppCompatActivity() {
 
     private var _mediaPlayer: MediaPlayer? = null
     private val mediaPlayer get() = _mediaPlayer as MediaPlayer
+    private val quranViewModel: QuranViewModel by viewModels {  ViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,23 +46,50 @@ class DetailSurahActivity : AppCompatActivity() {
         initView()
         val mAdapter = SurahAdapter()
         mAdapter.setOnItemClicked(object : SurahAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: AyahsItem) {
+            override fun onItemClicked(data: Ayah) {
                 showAlertDialog(data)
             }
         })
-        val quranViewModel = ViewModelProvider(this)[QuranViewModel::class.java]
-        surah.number?.let {quranViewModel.getListAyahBySurah(it)}
 
-        quranViewModel.listAyahs.observe(this) {
-            mAdapter.setData(it.quranEdition?.get(0)?.ayahs, it.quranEdition)
-            binding.rvSurah.apply {
-                adapter = mAdapter
-                layoutManager = LinearLayoutManager(this@DetailSurahActivity)
+        val number = surah.number
+        if (number != null) {
+            quranViewModel.getDetailSurahWithQuranEditions(number).observe(this) {
+                when (it) {
+                    is Resource.Loading -> showLoading(true)
+                    is Resource.Success -> {
+                        mAdapter.setData(it?.data?.get(0)?.ayahs, it.data)
+                        binding.rvSurah.layoutManager = LinearLayoutManager(this@DetailSurahActivity)
+                        binding.rvSurah.adapter = mAdapter
+
+                        showLoading(false)
+                    }
+                    is Resource.Error -> {
+                        Snackbar.make(binding.root, "Error: " + it.message, Snackbar.LENGTH_INDEFINITE).show()
+                        showLoading(false)
+                    }
+
+                }
+            }
+        } else {
+            Toast.makeText(this, "Surah number not found", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.apply {
+            if (isLoading) {
+                progressBar.visibility = View.VISIBLE
+                rvSurah.visibility = View.GONE
+                cvDetailSurah.visibility = View.GONE
+            } else {
+                progressBar.visibility = View.GONE
+                rvSurah.visibility = View.VISIBLE
+                cvDetailSurah.visibility = View.VISIBLE
             }
         }
     }
 
-    private fun showAlertDialog (dataAudio: AyahsItem) {
+    private fun showAlertDialog (dataAudio: Ayah) {
         _mediaPlayer = MediaPlayer()
         val builder = AlertDialog.Builder(this, R.style.CustomALertDialog).create()
         val view = CustomViewAlertdialogBinding.inflate(layoutInflater)

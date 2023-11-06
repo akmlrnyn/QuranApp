@@ -4,53 +4,24 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import com.example.quran.data.QuranRepository
+import com.example.quran.data.Resource
+import com.example.quran.domain.model.QuranEdition
+import com.example.quran.domain.model.Surah
 import com.example.quran.network.ApiConfig
-import com.example.quran.network.AyahResponse
-import com.example.quran.network.SurahResponse
+import com.example.quran.network.quran.AyahResponse
+import com.example.quran.network.quran.SurahResponse
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.log
 
-class QuranViewModel : ViewModel() {
-    private var _listSurah = MutableLiveData<SurahResponse?>()
-    val listSurah get() = _listSurah as LiveData<SurahResponse>
+class QuranViewModel(private val quranRepository: QuranRepository) : ViewModel() {
 
-    private var _listAyahs = MutableLiveData<AyahResponse>()
-    val listAyahs get() = _listAyahs as LiveData<AyahResponse>
+   fun getListSurah(): LiveData<Resource<List<Surah>>> =
+       quranRepository.getListSurah().asLiveData()
 
-    fun getListSurah() {
-        ApiConfig.quranApiConfig.getListSurah().enqueue(object: Callback<SurahResponse> {
-            override fun onResponse(call: Call<SurahResponse>, response: Response<SurahResponse>) {
-                if (response.isSuccessful) {
-                    _listSurah?.postValue(response.body())
-                } else Log.e(
-                    "QuranViewModel",
-                    "onResponse: Error call Http request with status code" + response.code()
-                )
-            }
-
-            override fun onFailure(call: Call<SurahResponse>, t: Throwable) {
-                Log.e("QuranViewModel", "onFailure: " + t.localizedMessage)
-            }
-        })
-    }
-
-    fun getListAyahBySurah(number: Int) {
-        ApiConfig.quranApiConfig.getListAyahsBySurah(number).enqueue(object:
-        Callback<AyahResponse> {
-            override fun onResponse(call: Call<AyahResponse>, response: Response<AyahResponse>) {
-                if (response.isSuccessful) {
-                    _listAyahs.postValue(response.body())
-                } else Log.e(
-                    "QuranViewModel",
-                    "onResponse: Error call Http request with status code" + response.code()
-                )
-            }
-
-            override fun onFailure(call: Call<AyahResponse>, t: Throwable) {
-                Log.e("QuranViewModel", "onFailure: " + t.localizedMessage)
-            }
-        })
-    }
+    fun getDetailSurahWithQuranEditions(number: Int): LiveData<Resource<List<QuranEdition>>> =
+        quranRepository.getDetailSurahWithQuranEditions(number).asLiveData()
 }
