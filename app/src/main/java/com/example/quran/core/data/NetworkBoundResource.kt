@@ -1,4 +1,4 @@
-package com.example.quran.data
+package com.example.quran.core.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
@@ -26,5 +26,5 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
     protected abstract suspend fun createCall(): Flow<NetworkResponse<RequestType>>
 
-    fun asFlow() : Flow<Resource<ResultType>> =
+    fun asFlow() : Flow<Resource<ResultType>> = result
 }

@@ -3,7 +3,7 @@ package com.example.quran.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.quran.di.Injection
+import com.example.quran.core.di.Injection
 import com.example.quran.presentation.quran.QuranViewModel
 
 @Suppress("UNCHECKED_CAST")

@@ -8,16 +8,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quran.R
 import com.example.quran.adapter.SurahAdapter
-import com.example.quran.data.Resource
+import com.example.quran.core.data.Resource
 import com.example.quran.databinding.ActivityDetailSurahBinding
 import com.example.quran.databinding.CustomViewAlertdialogBinding
-import com.example.quran.domain.model.Ayah
-import com.example.quran.network.quran.AyahsItem
-import com.example.quran.network.quran.SurahItem
+import com.example.quran.core.domain.model.Ayah
+import com.example.quran.core.domain.model.Surah
+import com.example.quran.core.network.quran.SurahItem
 import com.example.quran.presentation.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
@@ -25,10 +24,11 @@ class DetailSurahActivity : AppCompatActivity() {
     private var _binding: ActivityDetailSurahBinding? = null
     private val binding get() = _binding as ActivityDetailSurahBinding
 
-    private var _surah: SurahItem? = null
-    private val surah get() = _surah as SurahItem
+    private var _surah: Surah? = null
+    private val surah get() = _surah as Surah
 
     private var _mediaPlayer: MediaPlayer? = null
+
     private val mediaPlayer get() = _mediaPlayer as MediaPlayer
     private val quranViewModel: QuranViewModel by viewModels {  ViewModelFactory() }
 
@@ -42,7 +42,7 @@ class DetailSurahActivity : AppCompatActivity() {
 //           else -> @Suppress("DEPRECATION") intent.getParcelableExtra(EXTRA_DATA)
 //        }
 
-        _surah = intent.getParcelableExtra(EXTRA_DATA, SurahItem::class.java)
+        _surah = intent.getParcelableExtra(EXTRA_DATA, Surah::class.java)
         initView()
         val mAdapter = SurahAdapter()
         mAdapter.setOnItemClicked(object : SurahAdapter.OnItemClickCallback {
@@ -57,7 +57,7 @@ class DetailSurahActivity : AppCompatActivity() {
                 when (it) {
                     is Resource.Loading -> showLoading(true)
                     is Resource.Success -> {
-                        mAdapter.setData(it?.data?.get(0)?.ayahs, it.data)
+                        mAdapter.setData(it.data?.get(0)?.ayahs, it.data)
                         binding.rvSurah.layoutManager = LinearLayoutManager(this@DetailSurahActivity)
                         binding.rvSurah.adapter = mAdapter
 

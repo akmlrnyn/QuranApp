@@ -70,4 +70,7 @@ dependencies {
 
     // liveData
     api("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+
+    //FusedLocation
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 }

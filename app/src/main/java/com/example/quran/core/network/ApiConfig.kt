@@ -1,6 +1,6 @@
-package com.example.quran.network
+package com.example.quran.core.network
 
-import com.example.quran.network.quran.QuranApiService
+import com.example.quran.core.network.quran.QuranApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

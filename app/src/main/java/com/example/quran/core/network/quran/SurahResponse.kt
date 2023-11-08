@@ -1,4 +1,4 @@
-package com.example.quran.network.quran
+package com.example.quran.core.network.quran
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

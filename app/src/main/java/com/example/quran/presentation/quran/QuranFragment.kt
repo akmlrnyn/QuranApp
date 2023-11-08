@@ -5,12 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quran.R
 import com.example.quran.adapter.QuranAdapter
-import com.example.quran.data.Resource
+import com.example.quran.core.data.Resource
 import com.example.quran.databinding.FragmentQuranBinding
 import com.example.quran.presentation.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -25,14 +26,13 @@ class QuranFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
        _binding = FragmentQuranBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        quranViewModel.getListSurah()
         quranViewModel.getListSurah().observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> showLoading(true)
@@ -46,6 +46,7 @@ class QuranFragment : Fragment() {
                     showLoading(false)
                 }
                 is Resource.Error -> {
+                    Toast.makeText(context, "Error: " + it.message, Toast.LENGTH_SHORT).show()
                     Snackbar.make(view, "Error: " + it.message, Snackbar.LENGTH_INDEFINITE).show()
                     showLoading(false)
                 }

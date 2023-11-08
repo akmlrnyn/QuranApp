@@ -1,4 +1,4 @@
-package com.example.quran.data
+package com.example.quran.core.data
 
 sealed class NetworkResponse<out T> {
     data class Success<out T>(val data: T): NetworkResponse<T>()

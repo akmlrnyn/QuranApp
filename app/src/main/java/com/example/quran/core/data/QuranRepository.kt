@@ -1,10 +1,10 @@
-package com.example.quran.data
+package com.example.quran.core.data
 
-import com.example.quran.domain.model.QuranEdition
-import com.example.quran.domain.model.Surah
-import com.example.quran.domain.repository.IQuranRepository
-import com.example.quran.network.quran.QuranEditionItem
-import com.example.quran.network.quran.SurahItem
+import com.example.quran.core.domain.model.QuranEdition
+import com.example.quran.core.domain.model.Surah
+import com.example.quran.core.domain.repository.IQuranRepository
+import com.example.quran.core.network.quran.QuranEditionItem
+import com.example.quran.core.network.quran.SurahItem
 import com.example.quran.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 

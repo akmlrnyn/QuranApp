@@ -1,11 +1,13 @@
-package com.example.quran.data
+package com.example.quran.core.data
 
 import android.util.Log
-import com.example.quran.network.quran.QuranApiService
-import com.example.quran.network.quran.QuranEditionItem
-import com.example.quran.network.quran.SurahItem
+import com.example.quran.core.network.quran.QuranApiService
+import com.example.quran.core.network.quran.QuranEditionItem
+import com.example.quran.core.network.quran.SurahItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class QuranRemotedataSource (private val apiService: QuranApiService) {
     suspend fun getListSurah() : Flow<NetworkResponse<List<SurahItem>>> =
@@ -18,7 +20,7 @@ class QuranRemotedataSource (private val apiService: QuranApiService) {
                 emit(NetworkResponse.Error(e.toString()))
                 Log.e(QuranRemotedataSource::class.java.simpleName, "error: " + e.localizedMessage)
             }
-        }
+        }.flowOn(Dispatchers.IO)
 
     suspend fun getDetailSurahWithQuranEditions(number: Int): Flow<NetworkResponse<List<QuranEditionItem>>> =
         flow {
@@ -30,5 +32,5 @@ class QuranRemotedataSource (private val apiService: QuranApiService) {
                 emit(NetworkResponse.Error(e.toString()))
                 Log.e(QuranRemotedataSource::class.java.simpleName, "error: " + e.localizedMessage)
             }
-        }
+        }.flowOn(Dispatchers.IO)
 }

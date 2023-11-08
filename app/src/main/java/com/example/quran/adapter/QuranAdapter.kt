@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quran.databinding.ItemSurahBinding
-import com.example.quran.domain.model.Surah
+import com.example.quran.core.domain.model.Surah
 import com.example.quran.presentation.quran.DetailSurahActivity
 
 class QuranAdapter : RecyclerView.Adapter<QuranAdapter.MyViewHolder>() {

@@ -1,4 +1,4 @@
-package com.example.quran.network.quran
+package com.example.quran.core.network.quran
 
 import retrofit2.Call
 import retrofit2.http.GET

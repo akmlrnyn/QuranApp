@@ -1,4 +1,4 @@
-package com.example.quran.network.quran
+package com.example.quran.core.network.quran
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -6,38 +6,38 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class AyahResponse(
 
-	@Json(name="code")
+    @Json(name="code")
 	val code: Int? = null,
 
-	@Json(name="data")
+    @Json(name="data")
 	val quranEditionItem: List<QuranEditionItem>,
 
-	@Json(name="status")
+    @Json(name="status")
 	val status: String? = null
 )
 
 @JsonClass(generateAdapter = true)
 data class QuranEditionItem(
 
-	@Json(name="number")
+    @Json(name="number")
 	val number: Int? = null,
 
-	@Json(name="englishName")
+    @Json(name="englishName")
 	val englishName: String? = null,
 
-	@Json(name="numberOfAyahs")
+    @Json(name="numberOfAyahs")
 	val numberOfAyahs: Int? = null,
 
-	@Json(name="revelationType")
+    @Json(name="revelationType")
 	val revelationType: String? = null,
 
-	@Json(name="name")
+    @Json(name="name")
 	val name: String? = null,
 
-	@Json(name="ayahs")
+    @Json(name="ayahs")
 	val ayahs: List<AyahsItem>,
 
-	@Json(name="englishNameTranslation")
+    @Json(name="englishNameTranslation")
 	val englishNameTranslation: String? = null
 )
 

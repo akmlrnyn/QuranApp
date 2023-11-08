@@ -1,8 +1,8 @@
-package com.example.quran.domain.repository
+package com.example.quran.core.domain.repository
 
-import com.example.quran.data.Resource
-import com.example.quran.domain.model.QuranEdition
-import com.example.quran.domain.model.Surah
+import com.example.quran.core.data.Resource
+import com.example.quran.core.domain.model.QuranEdition
+import com.example.quran.core.domain.model.Surah
 import kotlinx.coroutines.flow.Flow
 
 interface IQuranRepository {

@@ -1,4 +1,4 @@
-package com.example.quran.domain.model
+package com.example.quran.core.domain.model
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

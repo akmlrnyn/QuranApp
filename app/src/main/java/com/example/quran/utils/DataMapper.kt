@@ -1,15 +1,16 @@
 package com.example.quran.utils
 
-import com.example.quran.domain.model.Ayah
-import com.example.quran.domain.model.QuranEdition
-import com.example.quran.domain.model.Surah
-import com.example.quran.network.quran.AyahsItem
-import com.example.quran.network.quran.QuranEditionItem
-import com.example.quran.network.quran.SurahItem
+import com.example.quran.core.domain.model.Ayah
+import com.example.quran.core.domain.model.QuranEdition
+import com.example.quran.core.domain.model.Surah
+import com.example.quran.core.network.quran.AyahsItem
+import com.example.quran.core.network.quran.QuranEditionItem
+import com.example.quran.core.network.quran.SurahItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 object DataMapper {
+    @JvmName("mapSurahResponseToDomain")
     fun mapResponseToDomain(input: List<SurahItem>) : Flow<List<Surah>> {
         val listSurah = ArrayList<Surah>()
         input.map {
@@ -26,6 +27,7 @@ object DataMapper {
         return flowOf(listSurah)
     }
 
+    @JvmName("mapQuranEditionItemToDomain")
    fun mapResponseToDomain(input: List<QuranEditionItem>) : Flow<List<QuranEdition>> {
         val quranEditions = ArrayList<QuranEdition>()
         input.map {
