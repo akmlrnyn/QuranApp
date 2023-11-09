@@ -9,6 +9,7 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.NavHostFragment
@@ -47,24 +48,23 @@ class MainActivity : AppCompatActivity() {
     private fun getUserLocation() {
         if (checkLocationPermission()) {
             if (isLocationOn()) {
-                fusedLocation.lastLocation.addOnCompleteListener {
-                    val geocoder = Geocoder(this, Locale.getDefault())
-                    geocoder.getFromLocation(
-                        -7.2682078,
-                        112.7788323,
-//                        it.result.latitude,
-//                        it.result.longitude,
-                        1,
-                    ) { listAddress ->
-                        val city = listAddress[0].subAdminArea
-                        val resultOfCity = city.split(" ")
-                        Snackbar.make(binding.root, resultOfCity[1], Snackbar.LENGTH_LONG).show()
+                fusedLocation.lastLocation.addOnSuccessListener(this) {
+                    if (it != null) {
+                        val geocoder = Geocoder(this, Locale.getDefault())
+                        geocoder.getFromLocation(
+                            it.latitude,
+                            it.longitude,
+                            1,
+                        ) { listAddress ->
+                            val city = listAddress[0].subAdminArea
+                            val resultOfCity = city.split(" ")
+                            Log.i("MainActivity", "getUserLocation: $resultOfCity")
+                            Snackbar.make(binding.root, resultOfCity[1], Snackbar.LENGTH_LONG)
+                                .show()
+                        }
+                    } else {
+                        Toast.makeText(this, "Sorry, something wrong", Toast.LENGTH_SHORT).show()
                     }
-//                if (it.result != null) {
-//
-//                } else {
-//                    Toast.makeText(this, "Sorry, something wrong", Toast.LENGTH_SHORT).show()
-//                }
                 }
             } else {
                 Toast.makeText(this, "Please Turn On The GPS", Toast.LENGTH_SHORT).show()
@@ -112,5 +112,19 @@ class MainActivity : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOC_PERMISSION_REQ_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getUserLocation()
+        } else {
+            Toast.makeText(this, "Need To Give Permission Location", Toast.LENGTH_SHORT).show()
+            getUserLocation()
+        }
     }
 }
