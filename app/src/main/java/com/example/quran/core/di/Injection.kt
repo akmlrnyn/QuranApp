@@ -1,13 +1,24 @@
 package com.example.quran.core.di
 
-import com.example.quran.core.data.QuranRemotedataSource
+import android.content.Context
+import com.example.quran.core.data.AdzanRepository
+import com.example.quran.core.data.network.RemotedataSource
 import com.example.quran.core.data.QuranRepository
-import com.example.quran.core.network.ApiConfig
+import com.example.quran.core.data.local.LocationPreferences
+import com.example.quran.core.data.network.ApiConfig
 
 object Injection {
+    val quranApiService = ApiConfig.quranApiConfig
+    val adzanApiService = ApiConfig.adzanApiConfig
+    val remoteDataSource = RemotedataSource(quranApiService, adzanApiService)
+
     fun provideQuranRepository(): QuranRepository {
-        val quranApiService = ApiConfig.quranApiConfig
-        val quranRemotedataSource = QuranRemotedataSource(quranApiService)
-        return QuranRepository(quranRemotedataSource)
+        val remotedataSource = RemotedataSource(quranApiService, adzanApiService)
+        return QuranRepository(remotedataSource)
+    }
+
+    fun provideAdzanRepository(context: Context): AdzanRepository {
+        val locationPreferences = LocationPreferences(context)
+        return AdzanRepository(remoteDataSource, locationPreferences)
     }
 }

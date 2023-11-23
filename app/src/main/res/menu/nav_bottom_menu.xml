@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/nav_adzan"
-        android:title="@string/adzan"
-        android:icon="@mipmap/ic_launcher" />
-
     <item android:id="@+id/nav_quran"
         android:title="@string/quran"
         android:icon="@mipmap/ic_launcher" />
 
-    <item android:id="@+id/nav_doa"
-        android:title="@string/doa"
+    <item android:id="@+id/nav_adzan"
+        android:title="@string/adzan"
         android:icon="@mipmap/ic_launcher" />
+
+
 
 </menu>

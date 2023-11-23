@@ -1,4 +1,4 @@
-package com.example.quran.core.network.quran
+package com.example.quran.core.data.network.quran
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

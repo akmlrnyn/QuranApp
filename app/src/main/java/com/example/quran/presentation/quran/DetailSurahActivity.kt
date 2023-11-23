@@ -16,7 +16,6 @@ import com.example.quran.databinding.ActivityDetailSurahBinding
 import com.example.quran.databinding.CustomViewAlertdialogBinding
 import com.example.quran.core.domain.model.Ayah
 import com.example.quran.core.domain.model.Surah
-import com.example.quran.core.network.quran.SurahItem
 import com.example.quran.presentation.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
@@ -30,7 +29,7 @@ class DetailSurahActivity : AppCompatActivity() {
     private var _mediaPlayer: MediaPlayer? = null
 
     private val mediaPlayer get() = _mediaPlayer as MediaPlayer
-    private val quranViewModel: QuranViewModel by viewModels {  ViewModelFactory() }
+    private val quranViewModel: QuranViewModel by viewModels {  ViewModelFactory(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

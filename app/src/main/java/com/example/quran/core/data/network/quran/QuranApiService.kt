@@ -1,6 +1,5 @@
-package com.example.quran.core.network.quran
+package com.example.quran.core.data.network.quran
 
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 

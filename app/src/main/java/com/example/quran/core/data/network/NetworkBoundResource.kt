@@ -1,5 +1,6 @@
-package com.example.quran.core.data
+package com.example.quran.core.data.network
 
+import com.example.quran.core.data.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first

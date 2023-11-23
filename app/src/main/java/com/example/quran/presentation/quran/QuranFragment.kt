@@ -21,7 +21,7 @@ class QuranFragment : Fragment() {
     private var _binding : FragmentQuranBinding? = null
     private val binding get() = _binding as FragmentQuranBinding
 
-    private val quranViewModel: QuranViewModel by viewModels { ViewModelFactory() }
+    private val quranViewModel: QuranViewModel by viewModels { ViewModelFactory(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +47,11 @@ class QuranFragment : Fragment() {
                 }
                 is Resource.Error -> {
                     Toast.makeText(context, "Error: " + it.message, Toast.LENGTH_SHORT).show()
-                    Snackbar.make(view, "Error: " + it.message, Snackbar.LENGTH_INDEFINITE).show()
+                    val snackbar = Snackbar.make(view, "Error: " + it.message, Snackbar.LENGTH_INDEFINITE)
+                    snackbar.setAction("OK") {
+                        snackbar.dismiss()
+                    }
+                    snackbar.show()
                     showLoading(false)
                 }
             }

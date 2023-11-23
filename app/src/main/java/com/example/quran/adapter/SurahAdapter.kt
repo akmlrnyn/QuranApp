@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.quran.databinding.ItemAyahBinding
 import com.example.quran.core.domain.model.Ayah
 import com.example.quran.core.domain.model.QuranEdition
-import com.example.quran.core.network.quran.AyahsItem
-import com.example.quran.core.network.quran.QuranEditionItem
 
 class SurahAdapter : RecyclerView.Adapter<SurahAdapter.MyviewHolder>() {
 

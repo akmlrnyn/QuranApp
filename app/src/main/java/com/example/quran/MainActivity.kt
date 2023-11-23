@@ -4,36 +4,30 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.quran.databinding.ActivityMainBinding
+import com.example.quran.presentation.ViewModelFactory
 import com.example.quran.utils.LOC_PERMISSION_REQ_CODE
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.snackbar.Snackbar
-import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding as ActivityMainBinding
-
-    private var _fusedLocation: FusedLocationProviderClient? = null
-    private val fusedLocation get() = _fusedLocation as FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        _fusedLocation = LocationServices.getFusedLocationProviderClient(this)
         getUserLocation()
 
         val bottomNavView = binding.navBottomView
@@ -48,24 +42,8 @@ class MainActivity : AppCompatActivity() {
     private fun getUserLocation() {
         if (checkLocationPermission()) {
             if (isLocationOn()) {
-                fusedLocation.lastLocation.addOnSuccessListener(this) {
-                    if (it != null) {
-                        val geocoder = Geocoder(this, Locale.getDefault())
-                        geocoder.getFromLocation(
-                            it.latitude,
-                            it.longitude,
-                            1,
-                        ) { listAddress ->
-                            val city = listAddress[0].subAdminArea
-                            val resultOfCity = city.split(" ")
-                            Log.i("MainActivity", "getUserLocation: $resultOfCity")
-                            Snackbar.make(binding.root, resultOfCity[1], Snackbar.LENGTH_LONG)
-                                .show()
-                        }
-                    } else {
-                        Toast.makeText(this, "Sorry, something wrong", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                val fusedLocation = LocationServices.getFusedLocationProviderClient(this)
+                fusedLocation.lastLocation
             } else {
                 Toast.makeText(this, "Please Turn On The GPS", Toast.LENGTH_SHORT).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)

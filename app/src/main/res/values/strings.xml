@@ -8,4 +8,10 @@
     <string name="string_cancel">Cancel</string>
     <string name="string_play_audio">Play Audio</string>
     <string name="string_playing_audio">Playing Audio</string>
+    <string name="imsak">imsak</string>
+    <string name="subuh">subuh</string>
+    <string name="dzuhur">dzuhur</string>
+    <string name="ashar">ashar</string>
+    <string name="maghrib">maghrib</string>
+    <string name="isya">isya</string>
 </resources>
