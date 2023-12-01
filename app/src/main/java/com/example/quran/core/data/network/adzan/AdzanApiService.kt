@@ -8,4 +8,12 @@ interface AdzanApiService {
     suspend fun searchCity(
         @Path("keyword") city : String
     ): CityResponses
+
+    @GET("/sholat/jadwal/{idCity}/{year}/{month}/{date}")
+    suspend fun getDailyAdzanTime(
+        @Path("idCity") id: String,
+        @Path("year") year: String,
+        @Path("month") month: String,
+        @Path("date") date: String
+    ): DailyResponse
 }

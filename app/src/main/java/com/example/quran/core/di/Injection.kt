@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.quran.core.data.AdzanRepository
 import com.example.quran.core.data.network.RemotedataSource
 import com.example.quran.core.data.QuranRepository
+import com.example.quran.core.data.local.CalendarPreferences
 import com.example.quran.core.data.local.LocationPreferences
 import com.example.quran.core.data.network.ApiConfig
 
@@ -19,6 +20,7 @@ object Injection {
 
     fun provideAdzanRepository(context: Context): AdzanRepository {
         val locationPreferences = LocationPreferences(context)
-        return AdzanRepository(remoteDataSource, locationPreferences)
+        val calendarPreferences = CalendarPreferences()
+        return AdzanRepository(remoteDataSource, locationPreferences, calendarPreferences)
     }
 }

@@ -3,6 +3,7 @@ package com.example.quran.core.data.network
 import android.util.Log
 import com.example.quran.core.data.network.adzan.AdzanApiService
 import com.example.quran.core.data.network.adzan.CityItem
+import com.example.quran.core.data.network.adzan.JadwalItem
 import com.example.quran.core.data.network.quran.QuranApiService
 import com.example.quran.core.data.network.quran.QuranEditionItem
 import com.example.quran.core.data.network.quran.SurahItem
@@ -47,4 +48,15 @@ class RemotedataSource (private val quranApiService: QuranApiService, private va
                 Log.e(RemotedataSource::class.java.simpleName, "error " + e.localizedMessage)
             }
         }.flowOn(Dispatchers.IO)
+
+    suspend fun getDailyAdzanTime(id: String, year: String, month: String, date: String): Flow<NetworkResponse<JadwalItem>> = flow<NetworkResponse<JadwalItem>> {
+        try {
+            val dailyResponse = adzanApiService.getDailyAdzanTime(id, year, month, date)
+            val jadwalResponse = dailyResponse.data.jadwalItem
+            emit(NetworkResponse.Success(jadwalResponse))
+        } catch (e: Exception) {
+            emit(NetworkResponse.Error(e.toString()))
+            Log.e(RemotedataSource::class.java.simpleName, "error " + e.localizedMessage)
+        }
+    }.flowOn(Dispatchers.IO)
 }

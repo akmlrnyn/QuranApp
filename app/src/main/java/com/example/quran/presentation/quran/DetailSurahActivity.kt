@@ -2,6 +2,7 @@ package com.example.quran.presentation.quran
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -41,7 +42,10 @@ class DetailSurahActivity : AppCompatActivity() {
 //           else -> @Suppress("DEPRECATION") intent.getParcelableExtra(EXTRA_DATA)
 //        }
 
-        _surah = intent.getParcelableExtra(EXTRA_DATA, Surah::class.java)
+        _surah = when{
+            Build.VERSION.SDK_INT >= 33 -> intent.getParcelableExtra(EXTRA_DATA, Surah::class.java)
+            else -> @Suppress("DEPRECATION")intent.getParcelableExtra(EXTRA_DATA)
+        }
         initView()
         val mAdapter = SurahAdapter()
         mAdapter.setOnItemClicked(object : SurahAdapter.OnItemClickCallback {

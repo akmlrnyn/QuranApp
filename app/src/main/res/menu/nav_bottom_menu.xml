@@ -3,11 +3,11 @@
 
     <item android:id="@+id/nav_quran"
         android:title="@string/quran"
-        android:icon="@mipmap/ic_launcher" />
+        android:icon="@drawable/logo_quran" />
 
     <item android:id="@+id/nav_adzan"
         android:title="@string/adzan"
-        android:icon="@mipmap/ic_launcher" />
+        android:icon="@drawable/ic_adzan" />
 
 
 

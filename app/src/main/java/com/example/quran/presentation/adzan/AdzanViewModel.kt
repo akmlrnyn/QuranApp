@@ -8,5 +8,5 @@ import com.example.quran.core.domain.model.DailyAdzanResult
 
 class AdzanViewModel(private val adzanRepository: AdzanRepository): ViewModel() {
 
-    fun getDailyAdzanTime(): LiveData<Resource<DailyAdzanResult>> = adzanRepository.getDailyAdzanTime()
+    fun getDailyAdzanTime(): LiveData<Resource<DailyAdzanResult>> = adzanRepository.getDailyAdzanTimeResult()
 }

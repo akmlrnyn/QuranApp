@@ -7,6 +7,9 @@
 
     <style name="Theme.Quran" parent="Base.Theme.Quran" />
     <style name="CustomALertDialog" parent="Theme.AppCompat.Light.Dialog.Alert" >
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorSecondary">@color/black</item>
+        <item name="statusBarBackground">@color/black</item>
         <item name="android:windowBackground">@drawable/rounded_corner</item>
     </style>
 </resources>
